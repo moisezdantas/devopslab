@@ -18,28 +18,28 @@ jobs:
 
       name: "Testes Unitarios"
       # Instalação de Módulos que são necessários para a Aplicação.
-      install:
-        - pip install flask flask-wtf coverage
-      script:  # Defini o script de Teste que deve rodar toda vez que o código for alterado.
-        - coverage run test.py || travis_terminate 1;
-        - coverage report app.py || travis_terminate 1;
-        - coverage xml app.py || travis_terminate 1;
+      #      install:
+              #- pip install flask flask-wtf coverage
+          #script:  # Defini o script de Teste que deve rodar toda vez que o código for alterado.
+      #- coverage run test.py || travis_terminate 1;
+          #- coverage report app.py || travis_terminate 1;
+          # - coverage xml app.py || travis_terminate 1;
 
-    - stage: STG Deploy
-      script: skip
+          #- stage: STG Deploy
+          #script: skip
       # Definir o Deploy no Heroku
-      deploy:
-        provider: heroku
-        strategy: api
-        api_key: $HEROKU_API_KEY
-        edge: true
-        app: devopslab-moisez
-        on:
-          branch: main
+      #deploy:
+      # provider: heroku
+      # strategy: api
+      # api_key: $HEROKU_API_KEY
+      # edge: true
+      # app: devopslab-moisez
+      # on:
+      #   branch: main
 
-    - stage: STG TEST
-      script:
-        - curl https://devopslab-moisez.herokuapp.com/ | grep "Hello World" || travis_terminate 1;
+          # - stage: STG TEST
+          #script:
+          #- curl https://devopslab-moisez.herokuapp.com/ | grep "Hello World" || travis_terminate 1;
 
     - stage: PROD Deploy
       script: skip
