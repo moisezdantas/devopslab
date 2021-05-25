@@ -1,4 +1,4 @@
-#Linguagem Utilizada para desenvolver a aplicação
+# Linguagem Utilizada para Desenvolver a Aplicação
 language: python
 
 # Versão que a aplicação suporta.
@@ -8,20 +8,49 @@ python:
 os: linux
 dist: xenial
 
-# Instalação de Módulos que são necessários para a Aplicação.
-install:
-  - pip install flask
+before_install:
+- openssl aes-256-cbc -K $encrypted_b1de681a8ed0_key -iv $encrypted_b1de681a8ed0_iv
+  -in google-cloud.json.enc -out ../../google-cloud.json -d
 
-# Defini o script de Teste que deve rodar toda vez que o código for alterado.
-script:
-  - python -m unittest -v test || travis_terminate 1;
-# Definir o Deploy no Heroku
-deploy:
-  provider: heroku
-  strategy: api
-  api_key: $HEROKU_API_KEY
-  edge: true 
-  app: devopslab-moisez 
-  on:
-      branch: main
+jobs:
+  include:
+    - stage: Build
 
+      name: "Testes Unitarios"
+      # Instalação de Módulos que são necessários para a Aplicação.
+      install:
+        - pip install flask flask-wtf coverage
+      script:  # Defini o script de Teste que deve rodar toda vez que o código for alterado.
+        - coverage run test.py || travis_terminate 1;
+        - coverage report app.py || travis_terminate 1;
+        - coverage xml app.py || travis_terminate 1;
+
+    - stage: STG Deploy
+      script: skip
+      # Definir o Deploy no Heroku
+      deploy:
+        provider: heroku
+        strategy: api
+        api_key: $HEROKU_API_KEY
+        edge: true
+        app: devopslab-moisez
+        on:
+          branch: main
+
+    - stage: STG TEST
+      script:
+        - curl https://devopslab-moisez.herokuapp.com/ | grep Hello World || travis_terminate 1;
+
+    - stage: PROD Deploy
+      script: skip
+      # Definir o Deploy no Google Cloud
+      deploy:
+        provider: gae
+        keyfile: ../projeto01gaby-23a03732798b.json
+        project: lavdevopscloud-moisez
+        on:
+          branch: main
+
+    - stage: PROD TEST
+      script:
+        - curl https://lavdevopscloud-moisez.uc.r.appspot.com/ | grep Hello World || travis_terminate 1;
