@@ -14,9 +14,9 @@ before_install:
 
 jobs:
   include:
-    - stage: Build
+          #- stage: Build
 
-      name: "Testes Unitarios"
+      #name: "Testes Unitarios"
       # Instalação de Módulos que são necessários para a Aplicação.
       #      install:
               #- pip install flask flask-wtf coverage
