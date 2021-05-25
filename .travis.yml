@@ -46,7 +46,7 @@ jobs:
       # Definir o Deploy no Google Cloud
       deploy:
         provider: gae
-        keyfile: ../projeto01gaby-23a03732798b.json
+        keyfile: ../google-cloud.json
         project: lavdevopscloud-moisez
         on:
           branch: main
