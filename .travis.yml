@@ -39,7 +39,7 @@ jobs:
 
     - stage: STG TEST
       script:
-        - curl https://devopslab-moisez.herokuapp.com/ | grep Hello World || travis_terminate 1;
+        - curl https://devopslab-moisez.herokuapp.com/ | grep "Hello World" || travis_terminate 1;
 
     - stage: PROD Deploy
       script: skip
@@ -53,4 +53,4 @@ jobs:
 
     - stage: PROD TEST
       script:
-        - curl https://lavdevopscloud-moisez.uc.r.appspot.com/ | grep Hello World || travis_terminate 1;
+        - curl https://lavdevopscloud-moisez.uc.r.appspot.com/ | grep "Hello World" || travis_terminate 1;
