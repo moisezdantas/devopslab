@@ -54,4 +54,3 @@ jobs:
     - stage: PROD TEST
       script:
         - curl https://lavdevopscloud-moisez.ue.r.appspot.com/ | grep "Hello World" || travis_terminate 1;
-
