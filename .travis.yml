@@ -10,7 +10,7 @@ dist: xenial
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_b1de681a8ed0_key -iv $encrypted_b1de681a8ed0_iv
-  -in google-cloud.json.enc -out ../../google-cloud.json -d
+  -in google-cloud.json.enc -out ../google-cloud.json -d
 
 jobs:
   include:
